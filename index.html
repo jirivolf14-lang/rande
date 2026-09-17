@@ -20,32 +20,111 @@
     }
 
     body {
-      background: radial-gradient(circle at center, #231f28 0%, #110f14 100%);
-      color: #eae5dc;
+      background-color: #f6f3ee;
+      background-image: radial-gradient(#e4ded5 1px, transparent 1px);
+      background-size: 20px 20px;
+      color: #383431;
       font-family: 'Montserrat', sans-serif;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 16px;
+      padding: 20px 14px;
       margin: 0;
+      overflow-x: hidden;
     }
 
     .app-container {
       width: 100%;
       max-width: 420px;
-      margin: auto;
+      perspective: 1000px;
     }
 
-    /* Karta se stylem */
+    /* REALISTICKÁ OBÁLKA S ANIMACÍ */
+    .envelope-wrapper {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08), 0 2px 10px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #e8e2d8;
+      overflow: hidden;
+      transition: transform 0.8s ease, opacity 0.6s ease;
+    }
+
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 0;
+      border-left: 210px solid transparent;
+      border-right: 210px solid transparent;
+      border-top: 170px solid #f9f7f2;
+      transform-origin: top center;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 4;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.06));
+    }
+
+    .envelope-wrapper.opened .envelope-flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+
+    .envelope-wrapper.opened {
+      transform: translateY(-20px) scale(0.96);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .envelope-body {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .wax-seal {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #e0bc66, #9e7d32);
+      box-shadow: 0 8px 24px rgba(168, 131, 48, 0.35), inset 0 2px 4px rgba(255, 255, 255, 0.6);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      margin: 18px 0;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .wax-seal:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 28px rgba(168, 131, 48, 0.45);
+    }
+
+    .wax-seal span {
+      font-size: 1.8rem;
+    }
+
+    /* KARTA OBSAHU */
     .card-box {
-      background: rgba(28, 25, 33, 0.96);
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-radius: 24px;
-      padding: 30px 20px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 25px rgba(212, 175, 55, 0.08);
+      background: #ffffff;
+      border: 1px solid #ede8e1;
+      border-radius: 20px;
+      padding: 32px 22px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -53,112 +132,111 @@
       width: 100%;
     }
 
-    /* Stránky */
     .page-step {
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      animation: fadeIn 0.5s ease-in-out;
+      animation: fadeIn 0.5s ease-out;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(12px); }
+      from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Typografie */
+    /* TYPOGRAFIE */
     .eyebrow {
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       letter-spacing: 4px;
       text-transform: uppercase;
-      color: #d4af37;
+      color: #a68434;
       margin-bottom: 12px;
       font-weight: 600;
     }
 
     .script-title {
       font-family: 'Alex Brush', cursive;
-      font-size: 3.4rem;
-      color: #f7f3ea;
-      line-height: 1.1;
-      margin-bottom: 4px;
+      font-size: 3.6rem;
+      color: #2b2724;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .family-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      letter-spacing: 7px;
+      text-transform: uppercase;
+      color: #9e7d32;
+      font-weight: 600;
     }
 
     .serif-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.85rem;
+      font-size: 2rem;
       font-weight: 600;
-      color: #ffffff;
+      color: #24211e;
       line-height: 1.25;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
 
     .quote-box {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
+      font-size: 1.28rem;
       font-style: italic;
-      line-height: 1.6;
-      color: #ded7cb;
-      margin-bottom: 20px;
-      padding: 0 6px;
+      line-height: 1.65;
+      color: #4a4541;
+      margin-bottom: 22px;
+      padding: 0 4px;
     }
 
     .quote-box strong {
-      color: #ffd875;
+      color: #9e7d32;
       font-style: normal;
       font-weight: 600;
     }
 
     .highlight-date {
-      color: #dfba51;
-      font-size: 1.15rem;
+      color: #9e7d32;
+      font-size: 1.25rem;
       font-weight: 600;
       letter-spacing: 1.5px;
       margin-bottom: 8px;
       text-transform: uppercase;
     }
 
-    /* Fotky */
+    /* FOTOGRAFIE */
+    .photo-frame {
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      border: 6px solid #faf8f5;
+      margin-bottom: 22px;
+      background: #eee8e0;
+    }
+
     .single-photo {
       width: 100%;
-      height: 300px;
-      border-radius: 14px;
+      height: 310px;
       object-fit: cover;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      margin-bottom: 22px;
       display: block;
     }
 
-    .dual-photo-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      width: 100%;
-      height: 100%;
-    }
-
-    .dual-photo-grid img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 10px;
-      display: block;
-    }
-
-    /* Stírací box (Stránka 3) */
+    /* STÍRACÍ PLOCHA (STRÁNKA 3) */
     .scratch-wrapper {
       position: relative;
       width: 100%;
-      max-width: 320px;
-      height: 280px;
+      max-width: 330px;
+      height: 250px;
       border-radius: 14px;
       overflow: hidden;
-      margin: 0 auto 16px auto;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(212, 175, 55, 0.3);
+      margin: 6px auto 16px auto;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      border: 5px solid #ffffff;
       touch-action: none;
+      background: #eee8e0;
     }
 
     .scratch-under {
@@ -168,103 +246,84 @@
       height: 100%;
     }
 
+    .dual-photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      width: 100%;
+      height: 100%;
+      background: #faf8f5;
+    }
+
+    .dual-photo-grid img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
     canvas {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 5;
+      z-index: 6;
       transition: opacity 0.6s ease;
       cursor: crosshair;
     }
 
-    /* Tlačítka */
+    /* TLAČÍTKA */
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #dfba51 0%, #ba9530 100%);
-      color: #1a161f;
+      background: linear-gradient(135deg, #d4af37 0%, #a68434 100%);
+      color: #ffffff;
       text-decoration: none;
       font-size: 0.8rem;
       font-weight: 600;
       letter-spacing: 2px;
       text-transform: uppercase;
-      padding: 14px 26px;
+      padding: 14px 28px;
       border-radius: 30px;
       border: none;
       cursor: pointer;
-      box-shadow: 0 8px 22px rgba(212, 175, 55, 0.35);
+      box-shadow: 0 8px 20px rgba(166, 132, 52, 0.28);
       transition: transform 0.15s, box-shadow 0.15s;
     }
 
     .btn:active {
       transform: scale(0.97);
     }
-
-    /* Obálka (Stránka 1) */
-    .envelope-box {
-      width: 100%;
-      padding: 35px 10px;
-      border: 1px dashed rgba(212, 175, 55, 0.4);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.02);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .wax-seal {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #e65151, #801212);
-      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.4);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      margin: 28px 0 12px 0;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .wax-seal span {
-      font-size: 2rem;
-    }
-
-    .family-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.1rem;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      color: #dfba51;
-      font-weight: 500;
-    }
   </style>
 </head>
 <body>
 
   <div class="app-container">
-    <div class="card-box">
 
-      <!-- STRÁNKA 1: OBÁLKA -->
-      <div class="page-step" id="page1" style="display: flex;">
-        <div class="envelope-box">
-          <div class="eyebrow">Dopis pro moji milovanou</div>
-          <div class="script-title">A + J</div>
-          <div class="family-name">Volf</div>
+    <!-- STRÁNKA 1: BÍLÁ OBÁLKA SE ZLATOU PEČETÍ -->
+    <div class="envelope-wrapper" id="envelopeCard">
+      <div class="envelope-flap" id="envelopeFlap"></div>
+      <div class="envelope-body">
+        <div class="eyebrow">Dopis pro moji ženu</div>
+        <div class="script-title">A + J</div>
+        <div class="family-name">Volf</div>
 
-          <div class="wax-seal" onclick="goToPage(2)">
-            <span>💌</span>
-          </div>
-          <div style="font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: #a99fae; margin-top: 8px;">
-            Dotkni se pečeti a otevři
-          </div>
+        <div class="wax-seal" onclick="openEnvelope()" title="Klikni pro otevření">
+          <span>✨</span>
+        </div>
+
+        <div style="font-size: 0.72rem; letter-spacing: 2.5px; text-transform: uppercase; color: #8e857c; margin-top: 6px;">
+          Dotkni se pečeti pro otevření
         </div>
       </div>
+    </div>
 
-      <!-- STRÁNKA 2: VYZNÁNÍ + SVATBA -->
+    <!-- KARTA PRO STRÁNKY 2, 3, 4 -->
+    <div class="card-box" id="mainCard" style="display: none;">
+
+      <!-- STRÁNKA 2: VYZNÁNÍ A SVATBA -->
       <div class="page-step" id="page2" style="display: none;">
         <div class="eyebrow">Moje vyznání</div>
         <div class="quote-box">
@@ -273,50 +332,54 @@
           Ale <strong>manžel</strong> miluje svoji ženu čistě a bez podmínek proto, že <strong>si tě vybral</strong>. Ze všech lidí na světě jsem si vybral právě tebe, protože s tebou chci tvořit rodinu a žít celý svůj život.“
         </div>
 
-        <img src="svatba.jpg" alt="Naše svatba" class="single-photo" onerror="this.style.display='none'">
+        <div class="photo-frame">
+          <img src="svatba.jpg" alt="Naše svatba" class="single-photo" onerror="this.src='https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800'">
+        </div>
 
         <button class="btn" onclick="goToPage(3)">Pokračovat dál →</button>
       </div>
 
-      <!-- STRÁNKA 3: RANDE + STÍRÁNÍ -->
+      <!-- STRÁNKA 3: RANDE A STÍRACÍ PLOCHA -->
       <div class="page-step" id="page3" style="display: none;">
         <div class="eyebrow">Náš den • Přesně po 5 letech</div>
         <div class="serif-title">Půjdeš se mnou na rande a večeři?</div>
         <div class="highlight-date">22. září 2026</div>
 
-        <div style="font-size: 0.85rem; color: #c4bcc9; line-height: 1.5; margin-bottom: 16px;">
+        <div style="font-size: 0.88rem; color: #66605b; line-height: 1.5; margin-bottom: 14px;">
           Bude to přesně 5 let od našeho nezapomenutelného randíčka v Praze s výborným jídlem.
         </div>
 
         <div class="scratch-wrapper" id="scratchWrapper">
           <div class="scratch-under">
             <div class="dual-photo-grid">
-              <img src="rande1.jpg" alt="Rande Praha 1">
-              <img src="rande2.jpg" alt="Rande Praha 2">
+              <img src="rande1.jpg" alt="Rande Praha 1" onerror="this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600'">
+              <img src="rande2.jpg" alt="Rande Praha 2" onerror="this.src='https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?q=80&w=600'">
             </div>
           </div>
           <canvas id="scratchCanvas"></canvas>
         </div>
 
-        <div id="scratchHint" style="font-size: 0.76rem; letter-spacing: 2px; text-transform: uppercase; color: #dfba51; margin-bottom: 14px;">
+        <div id="scratchHint" style="font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase; color: #a68434; margin-bottom: 16px; font-weight: 500;">
           ✨ Setři vrstvu a odhal vzpomínku ✨
         </div>
 
         <button class="btn" id="btnToPage4" style="display: none;" onclick="goToPage(4)">Číst dál →</button>
       </div>
 
-      <!-- STRÁNKA 4: ZÁVĚR + MIKULÁŠEK -->
+      <!-- STRÁNKA 4: ZÁVĚR, MIKULÁŠEK A ODPOVĚĎ -->
       <div class="page-step" id="page4" style="display: none;">
         <div class="eyebrow">Pro to nejdůležitější v životě</div>
         
-        <div class="quote-box" style="font-size: 1.22rem;">
+        <div class="quote-box">
           „Vím, že tě občas potrápím... ale chci, abys věděla, že <strong>jsi pro mě to nejvíc na celém světě</strong>.<br><br>
           Ty a náš miláček Mikulášek jste moje všechno.“
         </div>
 
-        <img src="rodina.jpg" alt="Naše rodina s Mikuláškem" class="single-photo" onerror="this.style.display='none'">
+        <div class="photo-frame">
+          <img src="rodina.jpg" alt="Naše rodina" class="single-photo" onerror="this.src='https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?q=80&w=800'">
+        </div>
 
-        <!-- Zde uveďte své telefonní číslo -->
+        <!-- Zde zadejte své telefonní číslo -->
         <a class="btn" id="btnAnswer" href="https://wa.me/420777446788?text=Můj%20miláčku,%20samozřejmě%20že%20půjdu!%20Těším%20se%20na%20naše%20rande%20❤️" target="_blank" onclick="party()">
           Říct své „ANO“ ❤️
         </a>
@@ -326,18 +389,25 @@
   </div>
 
   <script>
+    function openEnvelope() {
+      const envelope = document.getElementById('envelopeCard');
+      envelope.classList.add('opened');
+
+      setTimeout(() => {
+        envelope.style.display = 'none';
+        document.getElementById('mainCard').style.display = 'flex';
+        goToPage(2);
+      }, 750);
+    }
+
     function goToPage(num) {
-      // Skryje všechny stránky
-      for (let i = 1; i <= 4; i++) {
+      for (let i = 2; i <= 4; i++) {
         const p = document.getElementById('page' + i);
         if (p) p.style.display = 'none';
       }
 
-      // Zobrazí zvolenou stránku
       const target = document.getElementById('page' + num);
-      if (target) {
-        target.style.display = 'flex';
-      }
+      if (target) target.style.display = 'flex';
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -352,10 +422,10 @@
     function party() {
       if (typeof confetti === 'function') {
         confetti({
-          particleCount: 80,
-          spread: 70,
+          particleCount: 75,
+          spread: 65,
           origin: { y: 0.65 },
-          colors: ['#dfba51', '#ffffff', '#e85d75', '#fceade']
+          colors: ['#d4af37', '#e85d75', '#ffffff', '#f4d06f']
         });
       }
     }
@@ -374,22 +444,23 @@
       canvas.height = rect.height * (window.devicePixelRatio || 1);
       ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
 
+      // Zlatá stírací vrstva
       const grad = ctx.createLinearGradient(0, 0, rect.width, rect.height);
-      grad.addColorStop(0, '#534737');
-      grad.addColorStop(0.5, '#9e875b');
-      grad.addColorStop(1, '#574833');
+      grad.addColorStop(0, '#e3c67d');
+      grad.addColorStop(0.5, '#f4e0a5');
+      grad.addColorStop(1, '#cca552');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, rect.width, rect.height);
 
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
       ctx.lineWidth = 2;
-      ctx.strokeRect(10, 10, rect.width - 20, rect.height - 20);
+      ctx.strokeRect(8, 8, rect.width - 16, rect.height - 16);
 
-      ctx.fillStyle = '#ffffff';
+      ctx.fillStyle = '#6e5218';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.font = '600 13px Montserrat, sans-serif';
-      ctx.letterSpacing = '3px';
+      ctx.font = '600 12px Montserrat, sans-serif';
+      ctx.letterSpacing = '2.5px';
       ctx.fillText('SETŘI NAŠI VZPOMÍNKU', rect.width / 2, rect.height / 2);
 
       function scratch(x, y) {
@@ -414,12 +485,12 @@
         for (let i = 3; i < p.length; i += 32) {
           if (p[i] === 0) trans++;
         }
-        if (trans / (p.length / 32) > 0.40) {
+        if (trans / (p.length / 32) > 0.38) {
           isRevealed = true;
           canvas.style.opacity = '0';
           setTimeout(() => {
             canvas.remove();
-            document.getElementById('scratchHint').innerHTML = '❤️ Praha před 5 lety';
+            document.getElementById('scratchHint').innerHTML = '❤️ Naše vzpomínka z Prahy';
             const btn = document.getElementById('btnToPage4');
             if (btn) btn.style.display = 'inline-flex';
             party();
